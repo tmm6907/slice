@@ -27,7 +27,7 @@ func (i SliceIterator[T]) Collect() []T {
 	return res
 }
 
-// Map applies a transformation function to every element of a slice T and returns a new slice of V.
+// Map applies a transformation function to every element of a slice T and returns a new iterator of V.
 func Map[T, V any](s []T, transform func(t T) V) SliceIterator[V] {
 	return func(yield func(v V) bool) {
 		for _, v := range s {
@@ -38,7 +38,7 @@ func Map[T, V any](s []T, transform func(t T) V) SliceIterator[V] {
 	}
 }
 
-// Filter iterates over a slice T and returns a new slice containing only the elements
+// Filter iterates over a slice T and returns a new iterator containing only the elements
 // for which the provided filter function returns true.
 func Filter[T any](s []T, filter func(t T) bool) SliceIterator[T] {
 	return func(yield func(v T) bool) {
@@ -52,7 +52,7 @@ func Filter[T any](s []T, filter func(t T) bool) SliceIterator[T] {
 	}
 }
 
-// Reduce combines all elements of a slice T into a single accumulated value V,
+// Reduce combines all elements of a iterator of type T into a single accumulated value V,
 // starting with an initial value
 func Reduce[T, V any](i SliceIterator[T], initial V, reduce func(acc V, curr T) V) V {
 	res := initial
