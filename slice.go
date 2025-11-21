@@ -1,4 +1,4 @@
-package main
+package slice
 
 // Map applies a transformation function to every element of a slice T and returns a new slice of V.
 func Map[T, V any](s []T, transform func(t T) V) []V {
