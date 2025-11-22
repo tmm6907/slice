@@ -28,9 +28,9 @@ func (i SliceIterator[T]) Collect() []T {
 }
 
 // Map applies a transformation function to every element of a slice T and returns a new iterator of V.
-func Map[T, V any](s []T, transform func(t T) V) SliceIterator[V] {
+func Map[T, V any](s SliceIterator[T], transform func(t T) V) SliceIterator[V] {
 	return func(yield func(v V) bool) {
-		for _, v := range s {
+		for v := range s {
 			if !yield(transform(v)) {
 				return
 			}
@@ -40,9 +40,9 @@ func Map[T, V any](s []T, transform func(t T) V) SliceIterator[V] {
 
 // Filter iterates over a slice T and returns a new iterator containing only the elements
 // for which the provided filter function returns true.
-func Filter[T any](s []T, filter func(t T) bool) SliceIterator[T] {
+func Filter[T any](s SliceIterator[T], filter func(t T) bool) SliceIterator[T] {
 	return func(yield func(v T) bool) {
-		for _, v := range s {
+		for v := range s {
 			if filter(v) {
 				if !yield(v) {
 					return
